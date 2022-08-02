@@ -1,12 +1,13 @@
+import { ProxyState } from "../AppState.js"
+import { generateId } from "../Utils/generateId.js"
 
 export class Question{
   constructor(data){
+    this.id = data.id || generateId()
     this.category = data.category
     this.type = data.type
     this.difficulty = data.difficulty
     this.question = data.question
-    this.correctAnswer = data.correct_answer
-    this.incorrectAnswers = data.incorrect_answers
   }
 
   get Template(){
@@ -16,4 +17,12 @@ export class Question{
     </h2>
     `
   }
+
+  get Answer(){
+    let answers = ProxyState.answers.filter(a => a.id == this.id)
+    answers.forEach(a => template += a.Template)
+  }
 }
+
+
+
